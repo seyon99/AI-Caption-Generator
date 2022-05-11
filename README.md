@@ -1,4 +1,14 @@
 # Image-Classifier
-RESTful web service to classify images built using Kotlin + Spring Boot
+
+## About
+A RESTful web service to generate image captions using a Convolutional Neural Network (CNN).
 
 IN PROGRESS
+
+## Technologies Used
+  - Kotlin
+  - Spring Boot
+  - Python
+  - TensorFlow
+  - Keras
+  - AWS Lambda, S3
