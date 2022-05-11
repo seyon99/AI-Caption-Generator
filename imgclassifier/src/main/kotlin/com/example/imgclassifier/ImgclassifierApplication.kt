@@ -25,3 +25,6 @@ class MessageResource {
 
 // https://kotlinlang.org/docs/jvm-spring-boot-restful.html#run-the-application
 data class Message(val id: String?, val text: String)
+
+// TODO: implement endpoint to upload image to S3 to trigger lambda fcn.
+// https://aws.amazon.com/blogs/machine-learning/how-to-deploy-deep-learning-models-with-aws-lambda-and-tensorflow/

@@ -1,4 +1,3 @@
-# Source: https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/
 from pickle import load
 from numpy import argmax
 from keras.preprocessing.sequence import pad_sequences
