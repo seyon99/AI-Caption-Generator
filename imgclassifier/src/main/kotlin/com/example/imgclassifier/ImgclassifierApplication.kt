@@ -33,25 +33,26 @@ class CaptionGenerationController() {
 
 	@PostMapping
 	// TODO: implement endpoint to upload image to S3 to trigger lambda fcn.
-	suspend fun putS3Object(bucketName: String, objectKey: String, objectPath: String) {
+	suspend fun putS3Object(@RequestBody s3image: S3image) {
 
 		val metadataVal = mutableMapOf<String, String>()
-		metadataVal["myVal"] = "test"
+		metadataVal["myVal"] = "caption-gen-trigger"
 
 		val request = PutObjectRequest {
-			bucket = bucketName // aikotlin
-			key = objectKey
+			bucket = s3image.bucketName // aikotlin
+			key = s3image.objectKey
 			metadata = metadataVal
-			this.body = Paths.get(objectPath).asByteStream()
+			this.body = Paths.get(s3image.objectPath).asByteStream()
 		}
 
 		S3Client { region = "us-east-2" }.use { s3 ->
 			val response = s3.putObject(request)
-			println("Tag information is ${response.eTag}")
+			println("Tag information: ${response.eTag}")
 		}
 	}
 }
 
+data class S3image(val bucketName: String, val objectKey: String, val objectPath: String)
 
 data class Image(val imgId: String?, val imgObj: Blob)
 
