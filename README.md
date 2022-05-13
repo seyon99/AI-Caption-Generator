@@ -12,6 +12,9 @@ A RESTful web service to generate image captions using a Convolutional Neural Ne
   - AWS Lambda, S3
 
 ## Building/running
+Use the following documentation to set the AWS Access Key Id and AWS Secret Access Key variables to the appropriate values:
+https://docs.aws.amazon.com/sdk-for-kotlin/latest/developer-guide/setup.html
+
 Using IntelliJ IDEA, users may run the API by cloning and opening the project, and clicking the run button.
 Otherwise, the following steps can be taken if the user prefers to run the API through the terminal.
 
