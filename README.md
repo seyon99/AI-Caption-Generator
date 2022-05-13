@@ -1,7 +1,7 @@
-# Image-Classifier
+# AI Image Caption Generator
 
 ## About
-A RESTful web service to generate image captions using a Convolutional Neural Network (CNN).
+A REST API to generate image captions using a Convolutional Neural Network (CNN). With a few trivial modifications (which depend on the use case), this code can be reused in an Android application if needed.
 
 ## Technologies Used
   - Kotlin
@@ -12,7 +12,7 @@ A RESTful web service to generate image captions using a Convolutional Neural Ne
   - AWS Lambda, S3
 
 ## Building/running
-Use the following documentation to set the AWS Access Key Id and AWS Secret Access Key variables to the appropriate values:
+Use the following documentation to set the AWS Access Key ID and AWS Secret Access Key variables to the appropriate values:
 https://docs.aws.amazon.com/sdk-for-kotlin/latest/developer-guide/setup.html
 
 Using IntelliJ IDEA, users may run the API by cloning and opening the project, and clicking the run button.
