@@ -1,6 +1,6 @@
 package com.example.imgclassifier
 
-//snippet-sourcedescription:[ListObjects.kt demonstrates how to list objects located in a given Amazon Simple Storage Service (Amazon S3) bucket.]
+//snippet-sourcedescription:[TestMethods.kt demonstrates how to list objects located in a given Amazon Simple Storage Service (Amazon S3) bucket.]
 //snippet-keyword:[AWS SDK for Kotlin]
 //snippet-keyword:[Code Sample]
 //snippet-service:[Amazon S3]
@@ -15,8 +15,14 @@ package com.example.imgclassifier
 
 // snippet-start:[s3.kotlin.list_objects.import]
 import aws.sdk.kotlin.services.s3.S3Client
+import aws.sdk.kotlin.services.s3.model.GetObjectRequest
 import aws.sdk.kotlin.services.s3.model.ListObjectsRequest
-import kotlin.system.exitProcess
+import aws.sdk.kotlin.services.s3.model.PutObjectRequest
+import aws.smithy.kotlin.runtime.content.asByteStream
+import aws.smithy.kotlin.runtime.content.writeToFile
+import java.io.File
+import java.nio.file.Paths
+
 // snippet-end:[s3.kotlin.list_objects.import]
 
 /**
@@ -40,7 +46,25 @@ suspend fun main(args: Array<String>) {
 //    }
 
     val bucketName = "aikotlin"
-    listBucketObjects(bucketName)
+    //listBucketObjects(bucketName)
+    putObject(bucketName, "lets.jpeg", "./imgclassifier/lets.jpeg")
+    //getObject(bucketName, "pic1.jpeg", "./../../assets")
+}
+
+suspend fun getObject(bucketName: String, keyName: String, path: String) {
+
+    val request =  GetObjectRequest {
+        key = keyName
+        bucket= bucketName
+    }
+
+    S3Client { region = "us-east-2" }.use { s3 ->
+        s3.getObject(request) { resp ->
+            val myFile = File(path)
+            resp.body?.writeToFile(myFile)
+            println("Successfully read $keyName from $bucketName at ${myFile.toPath()}")
+        }
+    }
 }
 
 // snippet-start:[s3.kotlin.list_objects.main]
@@ -63,4 +87,22 @@ suspend fun listBucketObjects(bucketName: String) {
 
 private fun calKb(intValue: Long): Long {
     return intValue / 1024
+}
+
+suspend fun putObject(bucketName: String, objectKey: String, objectPath: String) {
+
+    val metadataVal = mutableMapOf<String, String>()
+    metadataVal["myVal"] = "test"
+
+    val request = PutObjectRequest {
+        bucket = bucketName
+        key = objectKey
+        metadata = metadataVal
+        this.body = Paths.get(objectPath).asByteStream()
+    }
+
+    S3Client { region = "us-east-1" }.use { s3 ->
+        val response =s3.putObject(request)
+        println("Tag information is ${response.eTag}")
+    }
 }

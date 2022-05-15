@@ -45,7 +45,6 @@ class CaptionGenerationController() {
 	}
 
 	@PostMapping
-	// TODO: finish implementing endpoint to upload image to S3 to trigger lambda fcn.
 	suspend fun putS3Object(@RequestBody s3image: S3image) {
 
 		val metadataVal = mutableMapOf<String, String>()
@@ -66,8 +65,3 @@ class CaptionGenerationController() {
 }
 
 data class S3image(val bucketName: String, val objectKey: String, val objectPath: String)
-
-data class Image(val imgId: String?, val imgObj: Blob)
-
-// additional reference:
-// https://aws.amazon.com/blogs/machine-learning/how-to-deploy-deep-learning-models-with-aws-lambda-and-tensorflow/
