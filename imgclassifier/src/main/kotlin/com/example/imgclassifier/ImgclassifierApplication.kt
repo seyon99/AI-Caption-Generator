@@ -2,18 +2,12 @@ package com.example.imgclassifier
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import java.sql.Blob
 import aws.sdk.kotlin.services.s3.S3Client
+import aws.sdk.kotlin.services.s3.model.ListObjectsRequest
 import aws.sdk.kotlin.services.s3.model.PutObjectRequest
 import aws.smithy.kotlin.runtime.content.asByteStream
+import org.springframework.web.bind.annotation.*
 import java.nio.file.Paths
 import kotlin.system.exitProcess
 
@@ -28,11 +22,30 @@ fun main(args: Array<String>) {
 @RestController
 @RequestMapping("/captiongen")
 class CaptionGenerationController() {
-	@GetMapping
-	fun findAll() = "{img-link: aws3..., img-caption: A blue dog}"
+	@GetMapping("/{bucketName}")
+	suspend fun listBucketObjects(@PathVariable bucketName: String) {
+		println(bucketName)
+		val request = ListObjectsRequest {
+			bucket = bucketName
+		}
+
+		S3Client { region = "us-east-2" }.use { s3 ->
+
+			val response = s3.listObjects(request)
+			response.contents?.forEach { myObject ->
+				println("The name of the key is ${myObject.key}")
+				println("The object is ${calKb(myObject.size)} KBs")
+				println("The owner is ${myObject.owner}")
+			}
+		}
+	}
+
+	private fun calKb(intValue: Long): Long {
+		return intValue / 1024
+	}
 
 	@PostMapping
-	// TODO: implement endpoint to upload image to S3 to trigger lambda fcn.
+	// TODO: finish implementing endpoint to upload image to S3 to trigger lambda fcn.
 	suspend fun putS3Object(@RequestBody s3image: S3image) {
 
 		val metadataVal = mutableMapOf<String, String>()
@@ -56,4 +69,5 @@ data class S3image(val bucketName: String, val objectKey: String, val objectPath
 
 data class Image(val imgId: String?, val imgObj: Blob)
 
+// additional reference:
 // https://aws.amazon.com/blogs/machine-learning/how-to-deploy-deep-learning-models-with-aws-lambda-and-tensorflow/

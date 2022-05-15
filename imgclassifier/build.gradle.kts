@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-	implementation("aws.sdk.kotlin:s3:0.14.3-beta")
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("aws.sdk.kotlin:s3:0.15.0")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc:2.6.7")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
