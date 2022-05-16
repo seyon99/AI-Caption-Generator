@@ -9,6 +9,7 @@ from keras.preprocessing.image import img_to_array
 from keras.applications.vgg16 import preprocess_input
 from keras.models import Model
 from keras.models import load_model
+import caption_generator
 
 def lambda_handler(event, context):
     tokenizer = load(open('tokenizer.pkl', 'rb'))
