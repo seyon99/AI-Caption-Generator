@@ -12,4 +12,4 @@ A REST API to generate image captions using a Convolutional Neural Network (CNN)
   - AWS Lambda, S3
 
 ## Basic Architechture
-The `/captiongen/:bucketName` endpoint can be used to upload an image to an S3 bucket, and the S3 bucket event invokes the lambda function `lambda_handler` which runs the deep learning model and generates an image caption.
+The `/captiongen/:bucketName` POST endpoint can be used to upload an image to an S3 bucket, and the S3 bucket event invokes the lambda function `lambda_handler` which runs the deep learning model and generates an image caption.
