@@ -1,7 +1,7 @@
 # AI Image Caption Generator
 
 ## About
-A REST API to generate image captions using a Convolutional Neural Network (CNN). With a few trivial modifications (which depend on the use case), this code can be reused in an Android application if needed.
+A REST API to generate image captions using a Convolutional Neural Network (CNN). With a few trivial modifications (which depend on the use case), this code can be reused in an Android application if needed. Read the documentation for the AWS SDK for Kotlin to determine how to create your .env file to use the API.
 
 ## Technologies Used
   - Kotlin
